@@ -26,6 +26,7 @@ public class UserOrderForm {
 
     @Email
     @NotBlank
+    @Max(256)
     private String email;
 
     @NotBlank
