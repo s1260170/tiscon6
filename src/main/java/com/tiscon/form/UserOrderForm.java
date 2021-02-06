@@ -21,6 +21,7 @@ public class UserOrderForm {
 
     @NotBlank
     @Numeric
+    @Max(11)
     private String tel;
 
     @Email
