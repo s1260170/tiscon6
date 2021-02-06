@@ -45,7 +45,7 @@ public class UserOrderForm {
 
     @Numeric
     @NotBlank
-    @Max(200)
+    //@Max(200)
     private String box;
 
     @Numeric
