@@ -16,6 +16,7 @@ import javax.validation.constraints.Max;
 public class UserOrderForm {
 
     @NotBlank
+    @Max(60)
     private String customerName;
 
     @NotBlank
