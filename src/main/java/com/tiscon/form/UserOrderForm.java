@@ -40,6 +40,7 @@ public class UserOrderForm {
     private String newPrefectureId;
 
     @NotBlank
+    @Max(200)
     private String newAddress;
 
     @Numeric
