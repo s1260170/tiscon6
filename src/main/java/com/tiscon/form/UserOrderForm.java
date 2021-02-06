@@ -33,6 +33,7 @@ public class UserOrderForm {
     private String oldPrefectureId;
 
     @NotBlank
+    @Max(200)
     private String oldAddress;
 
     @NotBlank
