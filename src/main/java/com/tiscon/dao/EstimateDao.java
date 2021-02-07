@@ -95,6 +95,8 @@ public class EstimateDao {
                 "SELECT PREFECTURE_ID_FROM, PREFECTURE_ID_TO, DISTANCE FROM PREFECTURE_DISTANCE UNION ALL " +
                 "SELECT PREFECTURE_ID_TO PREFECTURE_ID_FROM ,PREFECTURE_ID_FROM PREFECTURE_ID_TO ,DISTANCE FROM PREFECTURE_DISTANCE) " +
                 "WHERE PREFECTURE_ID_FROM  = :prefectureIdFrom AND PREFECTURE_ID_TO  = :prefectureIdTo";
+        // union all 重複を含める
+
 
         PrefectureDistance prefectureDistance = new PrefectureDistance();
         prefectureDistance.setPrefectureIdFrom(prefectureIdFrom);
@@ -102,8 +104,10 @@ public class EstimateDao {
 
         double distance;
         try {
-            distance = parameterJdbcTemplate.queryForObject(sql, new BeanPropertySqlParameterSource(prefectureDistance), double.class);
+            //
+            distance = parameterJdbcTemplate.queryForList(sql, new BeanPropertySqlParameterSource(prefectureDistance), double.class).get(0);
         } catch (IncorrectResultSizeDataAccessException e) {
+            System.out.println("Error");
             distance = 0;
         }
         return distance;
