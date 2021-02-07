@@ -3,7 +3,6 @@ package com.tiscon.form;
 import com.tiscon.validator.Numeric;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,7 +21,7 @@ public class UserOrderForm {
 
     @NotBlank
     @Numeric
-    @Max(11)
+    @Size(min = 1, max = 11)
     private String tel;
 
     @Email
