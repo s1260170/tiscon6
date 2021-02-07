@@ -43,6 +43,9 @@ public class UserOrderForm {
     @Size(min = 1, max = 200)
     private String newAddress;
 
+    @NotBlank
+    private String month;
+
     @Numeric
     @NotBlank
     //@Max(200)
