@@ -27,7 +27,7 @@ public class UserOrderForm {
 
     @Email
     @NotBlank
-    @Max(256)
+    @Size(min = 1, max = 256)
     private String email;
 
     @NotBlank
