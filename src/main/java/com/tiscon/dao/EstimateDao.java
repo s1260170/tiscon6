@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.namedparam.*;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
@@ -133,14 +134,20 @@ public class EstimateDao {
      * @return 料金[円]
      */
     public int getPricePerTruck(int boxNum) {
-        int ModBoxNum = boxNum % 200;
-        int DivBoxNum = boxNum / 200;
-        String sql = "SELECT PRICE FROM TRUCK_CAPACITY WHERE MAX_BOX >= :boxNum ORDER BY PRICE LIMIT 1";
+
+        String SqlCapa = "SELECT MAX_BOX FROM TRUCK_CAPACITY ORDER BY PRICE DESC LIMIT 1";
+        JdbcTemplate jdbc = new JdbcTemplate();
+        int CapaTruck = jdbc.queryForObject(SqlCapa,Integer.class);
+        int ModBoxNum = boxNum % CapaTruck;
+        int DivBoxNum = boxNum / CapaTruck;
+        System.out.println(CapaTruck);
+
+        String sql = "SELECT PRICE FROM TRUCK_CAPACITY WHERE MAX_BOX >= :boxNum ORDER BY PRICE  LIMIT 1";
 
         SqlParameterSource paramSource = new MapSqlParameterSource("boxNum", ModBoxNum); //boxNUMをModBoxNum
-        SqlParameterSource paramSource200 = new MapSqlParameterSource("boxNum", 200);
+        SqlParameterSource paramSource200 = new MapSqlParameterSource("boxNum", CapaTruck);
 
-        if (boxNum > 200){
+        if (boxNum > CapaTruck){
             return ( parameterJdbcTemplate.queryForObject(sql, paramSource, Integer.class) + DivBoxNum * ( parameterJdbcTemplate.queryForObject(sql, paramSource200, Integer.class)));
         }
         return parameterJdbcTemplate.queryForObject(sql, paramSource, Integer.class);
